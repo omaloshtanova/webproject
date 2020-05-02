@@ -1,0 +1,41 @@
+<html lang="en">
+  <head>
+    <title>{{title}}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous" />
+    <style>
+      body {margin: 0; padding: 0}
+      #menu a {color: #000}
+      .field {background: url(static/images/field_bg.jpg) 50% 0; width: 250px}
+    </style>
+  </head>
+  <body bgcolor="Khaki">
+    <table width="100%" align="center">
+      <tr id="menu">
+        <td width="250px" height="50px" bgcolor="#7B68EE" align="center"><a href="/">Звериный рай</a></td>
+        <td width="250px" height="50px" bgcolor="#FF8C00" align="center"><a href="/animals"> Животные</a></td>
+        <td width="250px" height="50px" bgcolor="#FFD700" align="center"><a href="/"> Выставки</a></td>
+        <td width="250px" height="50px" bgcolor="#87CEEB" align="center"><a href="/about">О нас</a></td>
+        <td width="250px" height="50px" bgcolor="#00FF00" align="center"><a href="/login">Вход</a> / <a href="/register">Регистрация</a></td>
+      </tr>
+        <tr>
+        <td class="field">
+          лево
+        </td>
+        <td colspan="3" valign="top">
+          <br>
+          <main role="main" class="container">
+              {% block content %} {% endblock %}
+          </main>
+        </td>
+        <td class="field">
+          право
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
