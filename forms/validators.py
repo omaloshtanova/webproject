@@ -19,7 +19,7 @@ class UniqueValue(object):
         self.table_field = table_field
 
         if not message:
-            message = 'Invalid email address.'
+            message = 'Value already exists.'
         self.message = message
 
     def __call__(self, form, field):

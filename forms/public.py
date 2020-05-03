@@ -7,7 +7,7 @@ from data import User
 
 DATA_REQUIRED_ERROR = 'Обязательное поле'
 EMAIL_ERROR = 'Не верно указан email'
-USER_UNIQUE_ERROR = 'Такой пользователь уже есть'
+USER_UNIQUE_ERROR = 'Пользователь с таким email уже существует'
 PASSWORD_LEN_ERROR = 'Пароль должен быть не менее %(min)d символов'
 PASSWORD_AGAIN_ERROR = 'Пароль не совпадает'
 
