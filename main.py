@@ -1,4 +1,5 @@
 from functools import wraps
+from werkzeug.utils import redirect
 from flask import Flask
 from flask_login import LoginManager, current_user
 
@@ -33,17 +34,6 @@ def anonymous_only(func):
             return redirect(AUTHORIZED_REDIRECT)
         return func(*args, **kwargs)
     return decorated
-
-
-# def anonymous_only(url='/'):
-#     def decorator(func):
-#         @wraps(func)
-#         def decorated_view(*args, **kwargs):
-#             if current_user and current_user.is_authenticated:
-#                 return redirect(url)
-#             return func(*args, **kwargs)
-#         return decorated_view
-#     return decorator
 
 
 def main():

@@ -20,7 +20,14 @@
         <td width="250px" height="50px" bgcolor="#FF8C00" align="center"><a href="/animals"> Животные</a></td>
         <td width="250px" height="50px" bgcolor="#FFD700" align="center"><a href="/"> Выставки</a></td>
         <td width="250px" height="50px" bgcolor="#87CEEB" align="center"><a href="/about">О нас</a></td>
-        <td width="250px" height="50px" bgcolor="#00FF00" align="center"><a href="/login">Вход</a> / <a href="/register">Регистрация</a></td>
+        <td width="250px" height="50px" bgcolor="#00FF00" align="center">
+          {% if current_user.is_authenticated %}
+            {{ current_user.first_name }} {{ current_user.last_name }}<br>
+            <a href="/logout">Выйти</a>
+          {% else %}
+            <a href="/login">Вход</a> / <a href="/register">Регистрация</a>
+          {% endif %}
+        </td>
       </tr>
         <tr>
         <td class="field">

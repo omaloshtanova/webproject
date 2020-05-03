@@ -19,7 +19,8 @@ class RegisterForm(FlaskForm):
                                                    Length(6, message=PASSWORD_LEN_ERROR)])
     password_again = PasswordField('Повторите пароль', validators=[DataRequired(message=DATA_REQUIRED_ERROR),
                                                                    EqualTo('password', message=PASSWORD_AGAIN_ERROR)])
-    name = StringField('Имя пользователя', validators=[DataRequired(message=DATA_REQUIRED_ERROR)])
+    first_name = StringField('Имя', validators=[DataRequired(message=DATA_REQUIRED_ERROR)])
+    last_name = StringField('Фамилия', validators=[DataRequired(message=DATA_REQUIRED_ERROR)])
     about = TextAreaField("Немного о себе")
     submit = SubmitField('Зарегистрироваться')
 

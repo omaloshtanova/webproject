@@ -24,13 +24,15 @@ def register():
     if form.validate_on_submit():
         session = db_session.create_session()
 
-        user = User(
-            first_name=form.name.data,
-            email=form.email.data
-        )
+        user = User()
+        user.first_name = form.first_name.data
+        user.last_name = form.last_name.data
+        user.email = form.email.data
+        user.about = form.about.data
         user.set_password(form.password.data)
         session.add(user)
         session.commit()
+
         return redirect('/login')
 
     return render_template('register.html', title='Регистрация', form=form)
@@ -49,7 +51,7 @@ def login():
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
 
-        return render_template('login.html', message="Неправильный логин или пароль", form=form)
+        return render_template('login.html', title='Авторизация', message="Неправильный логин или пароль", form=form)
 
     return render_template('login.html', title='Авторизация', form=form)
 
