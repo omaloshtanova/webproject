@@ -1,5 +1,5 @@
 from data import db_session
-from main import app, anonymous_only
+from main import app, for_anonymous, USER_ROLE
 from flask import render_template
 from flask_login import login_user, login_required, logout_user
 from werkzeug.utils import redirect
@@ -17,7 +17,7 @@ def about():
 
 
 @app.route('/register', methods=['GET', 'POST'])
-@anonymous_only
+@for_anonymous
 def register():
     form = RegisterForm()
 
@@ -30,6 +30,7 @@ def register():
         user.email = form.email.data
         user.about = form.about.data
         user.set_password(form.password.data)
+        user.role_id = USER_ROLE
         session.add(user)
         session.commit()
 
@@ -39,7 +40,7 @@ def register():
 
 
 @app.route('/login', methods=['GET', 'POST'])
-@anonymous_only
+@for_anonymous
 def login():
     form = LoginForm()
 
