@@ -2,8 +2,10 @@ import datetime
 import sqlalchemy
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from .db_session import SqlAlchemyBase
+
+USER_ROLE = 1
+ADMIN_ROLE = 2
 
 
 class User(SqlAlchemyBase, UserMixin):
