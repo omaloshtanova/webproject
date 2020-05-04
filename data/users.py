@@ -21,7 +21,7 @@ class User(SqlAlchemyBase, UserMixin, CRUDMixin):
 
     @classmethod
     def create(cls, commit=True, **kwargs):
-        fillable = cls.get_fillable(**kwargs)
+        fillable = cls._get_fillable(kwargs)
         user = cls(**fillable)
         user.set_password(kwargs['password'])
         user.role_id = USER_ROLE
