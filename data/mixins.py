@@ -1,6 +1,7 @@
 import datetime
 import sqlalchemy
 from sqlalchemy.orm.attributes import InstrumentedAttribute
+from werkzeug.exceptions import NotFound
 
 from .db_session import db_session
 
@@ -29,7 +30,10 @@ class CRUDMixin(object):
 
     @classmethod
     def get_or_404(cls, id):
-        return cls.query().get_or_404(id)
+        instance = cls.get(id)
+        if instance is None:
+            raise NotFound()
+        return instance
 
     @classmethod
     def all(cls):
@@ -40,8 +44,8 @@ class CRUDMixin(object):
         return cls.query().filter(criterion)
 
     def update(self, commit=True, **kwargs):
-        fillable = type(self)._get_fillable(**kwargs)
-        for attr, value in fillable.iteritems():
+        fillable = type(self)._get_fillable(kwargs)
+        for attr, value in fillable.items():
             setattr(self, attr, value)
         return commit and self.save() or self
 
@@ -54,6 +58,10 @@ class CRUDMixin(object):
     def delete(self, commit=True):
         self._db_session().delete(self)
         return commit and self.db_session.commit()
+
+    @classmethod
+    def delete_by(cls, criterion):
+        return cls.filter(criterion).delete()
 
     @classmethod
     def _db_session(cls):
