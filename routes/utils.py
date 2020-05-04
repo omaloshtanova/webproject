@@ -18,7 +18,6 @@ def unauthorized():
 def for_anonymous(func):
     @wraps(func)
     def decorated(*args, **kwargs):
-        print(current_user)
         if current_user.is_anonymous:
             return func(*args, **kwargs)
         return redirect(AUTHORIZED_REDIRECT)
