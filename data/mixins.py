@@ -47,7 +47,6 @@ class CRUDMixin(object):
 
     def save(self, commit=True):
         self._db_session().add(self)
-        print(self._db_session())
         if commit:
             self._db_session().commit()
         return self
