@@ -1,5 +1,4 @@
 from wtforms import ValidationError
-from data import db_session
 
 
 class Email(object):
@@ -14,15 +13,14 @@ class Email(object):
 
 
 class UniqueValue(object):
-    def __init__(self, table, table_field, message=None):
-        self.table = table
-        self.table_field = table_field
+    def __init__(self, model, field, message=None):
+        self.model = model
+        self.field = field
 
         if not message:
             message = 'Value already exists.'
         self.message = message
 
     def __call__(self, form, field):
-        session = db_session.create_session()
-        if session.query(self.table).filter(self.table_field == field.data).first():
+        if self.model.query().filter(self.field == field.data).first():
             raise ValidationError(self.message)

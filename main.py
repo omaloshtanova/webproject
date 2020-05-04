@@ -1,14 +1,14 @@
 from flask import Flask
 from flask_login import LoginManager
 from data import db_session
-from routes import public_routes, admin_routes, route_utils
+from routes import public_bp, admin_bp, route_utils
 
 
 def main():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'srr61dSLjxW/BRSMmwoTcGDWiaCqcqGXp8BfdQ7Y+Uo='
-    app.register_blueprint(public_routes)
-    app.register_blueprint(admin_routes)
+    app.register_blueprint(public_bp)
+    app.register_blueprint(admin_bp)
 
     db_session.global_init("db/db.sqlite")
 

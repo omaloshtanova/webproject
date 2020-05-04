@@ -4,12 +4,11 @@ from werkzeug.exceptions import Forbidden
 from werkzeug.utils import redirect
 
 from config import UNAUTHORIZED_REDIRECT, AUTHORIZED_REDIRECT
-from data import db_session, users, User
+from data import users, User
 
 
 def user_loader(user_id):
-    session = db_session.create_session()
-    return session.query(User).get(user_id)
+    return User.get(user_id)
 
 
 def unauthorized():
