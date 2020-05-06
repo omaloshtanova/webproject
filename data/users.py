@@ -35,3 +35,7 @@ class User(SqlAlchemyBase, UserMixin, CRUDMixin):
 
     def is_role(self, role_id):
         return self.role_id == role_id
+
+    @property
+    def is_admin(self):
+        return self.role_id == ADMIN_ROLE

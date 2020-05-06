@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="clearfix">
+        <h2 class="float-left"> {{title}} </h2>
+        <a class="btn btn-primary float-right" href="{{url_for('admin.breed_create')}}">Добавить</a>
+    </div>
+    <br>
+
+    {% for breed in breeds %}
+        <div>
+            <a href="{{url_for('admin.breed_update', id=breed.id)}}">{{breed.name}}</a> &nbsp;
+            <a href="{{url_for('admin.breed_delete', id=breed.id)}}" class="delete">×</a>
+        </div>
+        <br>
+    {% endfor %}
+
+{% endblock %}

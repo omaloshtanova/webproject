@@ -8,4 +8,4 @@ class Animal(SqlAlchemyBase, CRUDMixin):
     __tablename__ = 'animals'
 
     name = sqlalchemy.Column(sqlalchemy.String)
-    # breeds = orm.relation("Breeds", back_populates='animal')
+    breeds = orm.relation("Breed", backref="animals")

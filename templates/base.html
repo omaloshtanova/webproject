@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>{{title}}</title>
@@ -10,7 +11,7 @@
     <style>
       body {margin: 0; padding: 0}
       #menu a {color: #000}
-      .field {background: url(static/images/field_bg.jpg) 50% 0; width: 250px}
+      .field {background: url(/static/images/field_bg.jpg) 50% 0; width: 250px; vertical-align: top; padding: 40px 20px }
       .delete {font-size: 20px; color: red}
       .delete:hover {color: red; text-decoration: none}
     </style>
@@ -33,7 +34,11 @@
       </tr>
         <tr>
         <td class="field">
-          лево
+          {% if current_user.is_authenticated and current_user.is_admin %}
+            <a href="{{url_for('admin.animals_view')}}">Животные</a><br><br>
+            <a href="{{url_for('admin.breeds_view')}}">Породы</a><br><br>
+<!--            <a href="{{url_for('admin.animals_view')}}">Выставки</a>-->
+          {% endif %}
         </td>
         <td colspan="3" valign="top">
           <br>

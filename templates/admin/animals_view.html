@@ -10,7 +10,9 @@
     {% for animal in animals %}
         <div>
             <a href="{{url_for('admin.animal_update', id=animal.id)}}">{{animal.name}}</a> &nbsp;
-            <a href="{{url_for('admin.animal_delete', id=animal.id)}}" class="delete">×</a>
+            {% if animal.breeds == [] %}
+                <a href="{{url_for('admin.animal_delete', id=animal.id)}}" class="delete">×</a>
+            {% endif %}
         </div>
         <br>
     {% endfor %}
