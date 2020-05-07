@@ -1,3 +1,5 @@
+import os
+
 from flask import Blueprint, current_app, render_template
 from flask_login import current_user
 from werkzeug.exceptions import Forbidden
@@ -69,7 +71,7 @@ def breed_create():
 
     if form.validate_on_submit():
         filename = current_app.uploader.save(form.photo.data)
-        form.photo.data = current_app.uploader.url(filename)
+        form.photo.data = filename
         Breed.create(**form.data)
         return redirect('/admin/breeds')
 
@@ -86,7 +88,7 @@ def breed_update(id):
 
     if form.validate_on_submit():
         filename = current_app.uploader.save(form.photo.data)
-        form.photo.data = current_app.uploader.url(filename)
+        form.photo.data = filename
         breed.update(**form.data)
         return redirect('/admin/breeds')
 
@@ -100,5 +102,12 @@ def breed_update(id):
 
 @admin.route('/breeds<int:id>/delete')
 def breed_delete(id):
-    Breed.delete_by(Breed.id == id)
+    breed = Breed.get_or_404(id)
+
+    if breed.photo:
+        file_path = current_app.uploader.path(breed.photo)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
+    breed.delete()
     return redirect('/admin/breeds')
