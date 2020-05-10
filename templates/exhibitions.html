@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{title}}</h2><br>
+    {% for exhibition in exhibitions %}
+        <div>
+            {{ exhibition.date }} <br>
+            <i>Категория: {{ exhibition.animal.name }}</i> <br>
+            <b>{{ exhibition.name }}</b> <br>
+            {{ exhibition.address }} <br>
+            <a href="">Записаться</a>
+        </div>
+        <br>
+    {% endfor %}
+{% endblock %}

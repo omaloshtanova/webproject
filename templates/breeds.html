@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{title}}</h2><br>
+    {% for breed in breeds %}
+        <div>
+            <h4>{{ breed.name }}</h4>
+            {% if breed.photo != None %}
+                <img src="{{ current_app.uploader.url(breed.photo) }}" width="100%" />
+            {% endif %}
+            <br><br>
+            <p>{{ breed.about | safe }}</p>
+        </div>
+        <br>
+    {% endfor %}
+{% endblock %}

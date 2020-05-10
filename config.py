@@ -1,3 +1,5 @@
+DB_FILE = 'db/db.sqlite'
+
 AUTHORIZED_REDIRECT = '/'
 UNAUTHORIZED_REDIRECT = '/login'
 

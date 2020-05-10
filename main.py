@@ -2,6 +2,7 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_uploads import UploadSet, configure_uploads
 
+from config import DB_FILE
 from data import db_session
 from routes import public_bp, admin_bp, route_utils
 
@@ -13,7 +14,7 @@ def main():
     app.register_blueprint(public_bp)
     app.register_blueprint(admin_bp)
 
-    db_session.global_init("db/db.sqlite")
+    db_session.global_init(DB_FILE)
 
     login_manager = LoginManager()
     login_manager.init_app(app)

@@ -69,8 +69,12 @@ def breed_create():
     form.animal_id.choices = [(a.id, a.name) for a in animals]
 
     if form.validate_on_submit():
-        filename = current_app.uploader.save(form.photo.data)
-        form.photo.data = filename
+        if len(form.photo.data.filename):
+            filename = current_app.uploader.save(form.photo.data)
+            form.photo.data = filename
+        else:
+            form.photo.data = None
+
         Breed.create(**form.data)
         return redirect('/admin/breeds')
 
@@ -86,8 +90,12 @@ def breed_update(id):
     form.animal_id.choices = [(a.id, a.name) for a in animals]
 
     if form.validate_on_submit():
-        filename = current_app.uploader.save(form.photo.data)
-        form.photo.data = filename
+        if len(form.photo.data.filename):
+            filename = current_app.uploader.save(form.photo.data)
+            form.photo.data = filename
+        else:
+            form.photo.data = None
+
         breed.update(**form.data)
         return redirect('/admin/breeds')
 

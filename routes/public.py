@@ -1,5 +1,5 @@
-from flask import Blueprint
-from data import users, User
+from flask import Blueprint, current_app
+from data import users, User, Animal, Breed, Exhibition
 from flask import render_template
 from flask_login import login_user, login_required, logout_user
 from werkzeug.utils import redirect
@@ -54,3 +54,22 @@ def logout():
     logout_user()
 
     return redirect("/")
+
+
+@public.route('/animals')
+def animals():
+    all_animals = Animal.query().order_by(Animal.name).all()
+    return render_template('animals.html', title='Животные', animals=all_animals)
+
+
+@public.route('/animals/<int:id>')
+def breeds(id):
+    animal = Animal.get_or_404(id)
+    all_breeds = Breed.filter(Breed.animal_id == id).order_by(Breed.name).all()
+    return render_template('breeds.html', current_app=current_app, title=animal.name, breeds=all_breeds)
+
+
+@public.route('/exhibitions')
+def exhibitions():
+    all_exhibitions = Exhibition.query().order_by(Exhibition.date.desc()).all()
+    return render_template('exhibitions.html', title='Выставки', exhibitions=all_exhibitions)

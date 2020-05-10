@@ -57,11 +57,12 @@ class CRUDMixin(object):
 
     def delete(self, commit=True):
         self._db_session().delete(self)
-        return commit and self.db_session.commit()
+        return commit and self._db_session().commit()
 
     @classmethod
-    def delete_by(cls, criterion):
-        return cls.filter(criterion).delete()
+    def delete_by(cls, criterion, commit=True):
+        cls.filter(criterion).delete()
+        return commit and cls._db_session().commit()
 
     @classmethod
     def _db_session(cls):
