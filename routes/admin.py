@@ -5,7 +5,7 @@ from flask_login import current_user
 from werkzeug.exceptions import Forbidden
 from werkzeug.utils import redirect
 
-from data import users, Animal, Breed
+from data import users, Animal, Breed, Exhibition
 from forms.admin import *
 # from main import FILES
 
@@ -111,3 +111,51 @@ def breed_delete(id):
 
     breed.delete()
     return redirect('/admin/breeds')
+
+
+@admin.route('/exhibitions')
+def exhibitions_view():
+    exhibitions = Exhibition.query().order_by(Exhibition.date.desc()).all()
+    return render_template('admin/exhibitions_view.html', title='Выставки', exhibitions=exhibitions)
+
+
+@admin.route('/exhibitions/new', methods=['GET', 'POST'])
+def exhibition_create():
+    animals = Animal.query().order_by(Animal.name).all()
+
+    form = ExhibitionForm()
+    form.animal_id.choices = [(a.id, a.name) for a in animals]
+
+    if form.validate_on_submit():
+        Exhibition.create(**form.data)
+        return redirect('/admin/exhibitions')
+
+    return render_template('admin/exhibition.html', title='Добавить выставку', form=form)
+
+
+@admin.route('/exhibitions/<int:id>', methods=['GET', 'POST'])
+def exhibition_update(id):
+    exhibition = Exhibition.get_or_404(id)
+    animals = Animal.query().order_by(Animal.name).all()
+
+    form = ExhibitionForm()
+    form.animal_id.choices = [(a.id, a.name) for a in animals]
+
+    if form.validate_on_submit():
+        exhibition.update(**form.data)
+        return redirect('/admin/exhibitions')
+
+    form.animal_id.default = exhibition.animal_id
+    form.process()
+    form.name.data = exhibition.name
+    form.date.data = exhibition.date
+    form.address.data = exhibition.address
+    form.about.data = exhibition.about
+    return render_template('admin/exhibition.html', title='Править выставку', form=form)
+
+
+@admin.route('/exhibitions/<int:id>/delete')
+def exhibition_delete(id):
+    Exhibition.delete_by(Exhibition.id == id)
+    return redirect('/admin/exhibitions')
+

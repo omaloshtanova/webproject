@@ -37,7 +37,7 @@
           {% if current_user.is_authenticated and current_user.is_admin %}
             <a href="{{url_for('admin.animals_view')}}">Животные</a><br><br>
             <a href="{{url_for('admin.breeds_view')}}">Породы</a><br><br>
-<!--            <a href="{{url_for('admin.animals_view')}}">Выставки</a>-->
+            <a href="{{url_for('admin.exhibitions_view')}}">Выставки</a>
           {% endif %}
         </td>
         <td colspan="3" valign="top">

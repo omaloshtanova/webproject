@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="clearfix">
+        <h2 class="float-left"> {{title}} </h2>
+        <a class="btn btn-primary float-right" href="{{url_for('admin.exhibition_create')}}">Добавить</a>
+    </div>
+    <br>
+
+    {% for exhibition in exhibitions %}
+        <div>
+            <a href="{{url_for('admin.exhibition_update', id=exhibition.id)}}">{{exhibition.date}} {{exhibition.name}}</a> &nbsp;
+            <a href="{{url_for('admin.exhibition_delete', id=exhibition.id)}}" class="delete">×</a>
+        </div>
+        <br>
+    {% endfor %}
+
+{% endblock %}
