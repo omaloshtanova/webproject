@@ -7,7 +7,6 @@ from werkzeug.utils import redirect
 
 from data import users, Animal, Breed, Exhibition
 from forms.admin import *
-# from main import FILES
 
 admin = Blueprint('admin', __name__, url_prefix='/admin')
 
