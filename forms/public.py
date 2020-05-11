@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Length, EqualTo
 from forms.validators import UniqueValue, Email
@@ -31,3 +31,11 @@ class LoginForm(FlaskForm):
                                                    Length(6, message=PASSWORD_LEN_ERROR)])
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('Войти')
+
+
+class AddPetForm(FlaskForm):
+    name = StringField('Кличка питомца', validators=[DataRequired(message=DATA_REQUIRED_ERROR)])
+    user_id = StringField('')
+    breed_id = SelectField('Порода питомца', validate_choice=False)
+    number = StringField('Климо питомца', validators=[DataRequired(message=DATA_REQUIRED_ERROR)])
+    submit = SubmitField('Сохранить')

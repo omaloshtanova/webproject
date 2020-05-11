@@ -1,8 +1,10 @@
 from flask import Blueprint, current_app
 from data import users, User, Animal, Breed, Exhibition
 from flask import render_template
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.utils import redirect
+
+from data.pets import Pet
 from forms.public import *
 from .utils import for_anonymous
 
@@ -73,3 +75,26 @@ def breeds(id):
 def exhibitions():
     all_exhibitions = Exhibition.query().order_by(Exhibition.date.desc()).all()
     return render_template('exhibitions.html', title='Выставки', exhibitions=all_exhibitions)
+
+
+@public.route('/pets')
+@login_required
+def pets():
+    my_pets = Pet.filter(current_user.id == Pet.user_id).order_by(Pet.name).all()
+    return render_template('my_pets.html', title='Мои животные', pets=my_pets)
+
+
+@public.route('/add_pet', methods=['GET', 'POST'])
+@login_required
+def add_pet():
+    breeds = Breed.query().order_by(Breed.name).all()
+
+    form = AddPetForm()
+    form.breed_id.choices = [(a.id, a.name) for a in breeds]
+    form.user_id.data = current_user.id
+
+    if form.validate_on_submit():
+        Pet.create(**form.data)
+        return redirect('/pets')
+
+    return render_template('add_pet.html', title='Добавить питомца', form=form)

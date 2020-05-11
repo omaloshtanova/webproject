@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{title}}</h2><br>
+    <form method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        {{ form.user_id(type="hidden") }}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(class="form-control") }}<br>
+            {% for error in form.name.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.breed_id.label }}<br>
+            {{ form.breed_id(class="form-control") }}<br>
+            {% for error in form.breed_id.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.number.label }}<br>
+            {{ form.number(class="form-control") }}<br>
+            {% for error in form.number.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+{% endblock %}
