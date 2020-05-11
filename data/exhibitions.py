@@ -13,3 +13,4 @@ class Exhibition(SqlAlchemyBase, CRUDMixin):
     about = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     animal_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("animals.id"))
     animal = orm.relation('Animal')
+    pets = orm.relation("Pet", secondary='exhibition_pet', back_populates="exhibitions")

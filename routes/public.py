@@ -1,10 +1,9 @@
 from flask import Blueprint, current_app
-from data import users, User, Animal, Breed, Exhibition
 from flask import render_template
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.utils import redirect
 
-from data.pets import Pet
+from data import *
 from forms.public import *
 from .utils import for_anonymous
 
@@ -19,6 +18,19 @@ def index():
 @public.route('/about')
 def about():
     return render_template('about.html', title='О нас')
+
+
+@public.route('/animals/<int:id>')
+def breeds(id):
+    animal = Animal.get_or_404(id)
+    all_breeds = Breed.filter(Breed.animal_id == id).order_by(Breed.name).all()
+    return render_template('breeds.html', current_app=current_app, title=animal.name, breeds=all_breeds)
+
+
+@public.route('/exhibitions')
+def exhibitions():
+    all_exhibitions = Exhibition.query().order_by(Exhibition.date.desc()).all()
+    return render_template('exhibitions.html', title='Выставки', exhibitions=all_exhibitions)
 
 
 @public.route('/register', methods=['GET', 'POST'])
@@ -64,19 +76,6 @@ def animals():
     return render_template('animals.html', title='Животные', animals=all_animals)
 
 
-@public.route('/animals/<int:id>')
-def breeds(id):
-    animal = Animal.get_or_404(id)
-    all_breeds = Breed.filter(Breed.animal_id == id).order_by(Breed.name).all()
-    return render_template('breeds.html', current_app=current_app, title=animal.name, breeds=all_breeds)
-
-
-@public.route('/exhibitions')
-def exhibitions():
-    all_exhibitions = Exhibition.query().order_by(Exhibition.date.desc()).all()
-    return render_template('exhibitions.html', title='Выставки', exhibitions=all_exhibitions)
-
-
 @public.route('/pets')
 @login_required
 def pets():
@@ -98,3 +97,30 @@ def add_pet():
         return redirect('/pets')
 
     return render_template('add_pet.html', title='Добавить питомца', form=form)
+
+
+@public.route('/exs')
+@login_required
+def exs():
+    my_exhibitions = Exhibition.query().join(Exhibition.pets).filter(Pet.user_id == current_user.id).all()
+    return render_template('my_exhibitions.html', title='Мои Выставки', exhibitions=my_exhibitions)
+
+
+@public.route('/order/<int:id>', methods=['GET', 'POST'])
+@login_required
+def order(id):
+    exhibition = Exhibition.get_or_404(id)
+    my_pets = Pet.query().order_by(Pet.name).all()
+
+    form = OrderForm()
+    form.pet_id.choices = [(a.id, a.name) for a in my_pets]
+
+    if form.validate_on_submit():
+        session = exhibition._db_session()
+        pet = session.merge(Pet.get(form.pet_id.data))
+        exhibition.pets.append(pet)
+        session.add(exhibition)
+        session.commit()
+        return redirect('/exs')
+
+    return render_template('order.html', title='Записаться на выставку', form=form, exhibition=exhibition)

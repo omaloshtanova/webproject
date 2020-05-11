@@ -13,3 +13,4 @@ class Pet(SqlAlchemyBase, CRUDMixin):
     breed_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("breeds.id"))
     user = orm.relation("User")
     breed = orm.relation("Breed")
+    exhibitions = orm.relation("Exhibition", secondary='exhibition_pet', back_populates="pets")

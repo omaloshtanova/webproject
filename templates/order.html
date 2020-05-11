@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{ title }}</h2><br>
+    <p>{{ exhibition.name }}</p><br>
+    <form method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.pet_id.label }}<br>
+            {{ form.pet_id(class="form-control") }}<br>
+            {% for error in form.pet_id.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+{% endblock %}

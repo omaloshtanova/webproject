@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2> {{title}} </h2><br>
+
+    {% if exhibitions == [] %}
+        Вы не записаны ни на одну выставку
+    {% else %}
+        {% for exhibition in exhibitions %}
+            {% for pet in exhibition.pets %}
+                <div>
+                    <b>Дата:</b> {{ exhibition.date }}<br>
+                    <b>Выставка:</b> {{ exhibition.name }}<br>
+                    <b>Питомец:</b> {{ pet.name }}<br>
+                </div><br>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

@@ -39,3 +39,8 @@ class AddPetForm(FlaskForm):
     breed_id = SelectField('Порода питомца', validate_choice=False)
     number = StringField('Климо питомца', validators=[DataRequired(message=DATA_REQUIRED_ERROR)])
     submit = SubmitField('Сохранить')
+
+
+class OrderForm(FlaskForm):
+    pet_id = SelectField('Питомец', validate_choice=False)
+    submit = SubmitField('Сохранить')

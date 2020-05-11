@@ -5,10 +5,10 @@
     {% for exhibition in exhibitions %}
         <div>
             {{ exhibition.date }} <br>
-            <i>Категория: {{ exhibition.animal.name }}</i> <br>
+            <i>Тип: {{ exhibition.animal.name }}</i> <br>
             <b>{{ exhibition.name }}</b> <br>
             {{ exhibition.address }} <br>
-            <a href="">Записаться</a>
+            <a href="{{ url_for('public.order', id = exhibition.id) }}">Записаться</a>
         </div>
         <br>
     {% endfor %}
