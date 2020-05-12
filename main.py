@@ -24,7 +24,7 @@ def main():
     app.uploader = UploadSet()
     configure_uploads(app, app.uploader)
 
-    app.run(port=8080)
+    app.run()
 
 
 if __name__ == '__main__':
