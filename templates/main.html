@@ -1,5 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+    <h2>Последние выставки</h2><br>
+    {% for exhibition in exhibitions %}
+        <div>
+            {{ exhibition.date }} <br>
+            <i>Тип: {{ exhibition.animal.name }}</i> <br>
+            <b>{{ exhibition.name }}</b> <br>
+            {{ exhibition.address }} <br>
+            <a href="{{ url_for('public.order', id = exhibition.id) }}">Записаться</a>
+        </div>
+        <br>
+    {% endfor %}
+    <br>
+    <h2>Это интересно</h2><br>
+    <div>
+        <h4>{{ breed.name }}</h4>
+        <i>Тип: {{ breed.animal.name }}</i>
+        {% if breed.photo != None %}
+            <img src="{{ app.uploader.url(breed.photo) }}" width="100%" />
+        {% endif %}
+        <br><br>
+        <p>{{ breed.about | safe }}</p>
+    </div>
 {% endblock %}

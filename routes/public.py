@@ -1,6 +1,7 @@
 from flask import Blueprint, current_app
 from flask import render_template
 from flask_login import login_user, login_required, logout_user, current_user
+from sqlalchemy import func
 from werkzeug.utils import redirect
 
 from data import *
@@ -12,7 +13,9 @@ public = Blueprint('public', __name__)
 
 @public.route('/')
 def index():
-    return render_template('main.html', title='Главная')
+    random_breed = Breed.query().order_by(func.random()).first()
+    last_exhibitions = Exhibition.query().order_by(Exhibition.date.desc()).limit(3).all()
+    return render_template('main.html', title='Главная', app=current_app, breed=random_breed, exhibitions=last_exhibitions)
 
 
 @public.route('/about')
