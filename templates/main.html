@@ -12,15 +12,17 @@
         </div>
         <br>
     {% endfor %}
-    <br>
-    <h2>Это интересно</h2><br>
-    <div>
-        <h4>{{ breed.name }}</h4>
-        <i>Тип: {{ breed.animal.name }}</i>
-        {% if breed.photo != None %}
-            <img src="{{ app.uploader.url(breed.photo) }}" width="100%" />
-        {% endif %}
-        <br><br>
-        <p>{{ breed.about | safe }}</p>
-    </div>
+    {% if breed %}
+        <br>
+        <h2>Это интересно</h2><br>
+        <div>
+            <h4>{{ breed.name }}</h4>
+            <i>Тип: {{ breed.animal.name }}</i>
+            {% if breed.photo != None %}
+                <img src="{{ app.uploader.url(breed.photo) }}" width="100%" />
+            {% endif %}
+            <br><br>
+            <p>{{ breed.about | safe }}</p>
+        </div>
+    {% endif %}
 {% endblock %}
